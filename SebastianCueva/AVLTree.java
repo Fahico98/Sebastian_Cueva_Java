@@ -1,3 +1,4 @@
+
 package SebastianCueva;
 
 import java.util.*;
@@ -264,6 +265,19 @@ public class AVLTree<E extends Comparable<E>> extends BST<E> {
     size--;
     return true; // Element inserted
    }
+   
+   public String getComparisonsData(){
+      String output = "";
+      output += "Datos del arbol de la clase AVLTree.java (Arbol AVL).\n";
+      output += "Promedio de comparaciones: " + String.format("%.4f", getComparisonsAverage()) + "\n";
+      output += "Altura del arbol: " + getHeight() + "\n";
+      output += "Rotaciones Izquierda-Izquierda: " + getSpinningLL() + "\n";
+      output += "Rotaciones Izquierda-Derecha: " + getSpinningLR() + "\n";
+      output += "Rotaciones Derecha-Derecha: " + getSpinningRR() + "\n";
+      output += "Rotaciones Derecha-Izquierda: " + getSpinningRL() + "\n";
+      output += "Rotaciones totales: " + getTotalSpinning() + "\n";
+      return(output);
+   }
 
    /** AVLTreeNode is TreeNode plus height
     * @param <E> */
@@ -272,6 +286,13 @@ public class AVLTree<E extends Comparable<E>> extends BST<E> {
       public AVLTreeNode(E o){
          super(o);
       }
+   }
+   
+   /**
+    * @return the spinningLL
+    */
+   public int getTotalSpinning() {
+      return (spinningLL + spinningRL + spinningRR + spinningLR);
    }
 
    /**

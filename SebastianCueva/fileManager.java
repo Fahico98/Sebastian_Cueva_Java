@@ -1,5 +1,5 @@
-package SebastianCueva;
 
+package SebastianCueva;
 
 import java.io.*;
 import java.util.regex.Matcher;
@@ -20,7 +20,6 @@ public class fileManager {
       }catch(IOException e){
          System.out.println(e.getMessage());
       }
-      //System.out.println("File writer opened ---> " + fileName);
    }
    
    public static void openFileReader(String fileName){
@@ -30,7 +29,6 @@ public class fileManager {
       }catch(IOException e){
          System.out.println(e.getMessage());
       }
-      //System.out.println("File reader opened ---> " + fileName);
    }
    
    public static void closeFileWriter(){
@@ -39,7 +37,6 @@ public class fileManager {
       }catch(IOException e){
          System.out.println(e.getMessage());
       }
-      //System.out.println("File writer closed...");
    }
    
    public static void closeFileReader(){
@@ -48,7 +45,6 @@ public class fileManager {
       }catch(IOException e){
          System.out.println(e.getMessage());
       }
-      //System.out.println("File reader closed...");
    }
    
    public static boolean saveLine(String data){

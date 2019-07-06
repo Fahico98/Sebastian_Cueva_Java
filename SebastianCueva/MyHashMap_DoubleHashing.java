@@ -1,3 +1,4 @@
+
 package SebastianCueva;
 
 import java.util.*;
@@ -202,5 +203,23 @@ public class MyHashMap_DoubleHashing<K, V> implements MyMap<K, V>{
    @Override
    public boolean isEmpty() {
       return(size == 0);
+   }
+   
+   public String getCollisionsData(){
+      fileManager.openFileReader("doubleHashing");
+      String line, output = "";
+      while(true){
+         line = fileManager.loadLine();
+         if(line != null){
+            output += "Datos antes de la ampliación número " + line + " de la clase MyHashMap_DoubleHashing.java.\n";
+            output += "- entradas sin colición: " + fileManager.loadLine() + "\n";
+            output += "- entradas que colicionaron: " + fileManager.loadLine() + "\n";
+            output += "- coliciones totales debido al método Double Hashing: " + fileManager.loadLine() + "\n\n";
+         }else{
+            fileManager.closeFileReader();
+            break;
+         }
+      }
+      return(output);
    }
 }

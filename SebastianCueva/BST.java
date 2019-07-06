@@ -1,3 +1,4 @@
+
 package SebastianCueva;
 
 import java.util.*;
@@ -77,9 +78,10 @@ public class BST<E extends Comparable<E>> implements Tree<E> {
          }
          comparisons++;
       }
-      if(this.getClass().getName().equals("BST")){
+      //System.out.println(">>> " + this.getClass().getName());
+      if(this.getClass().getName().equals("SebastianCueva.BST")){
          fileManager.saveLine(Integer.toString(comparisons));
-      }else if(this.getClass().getName().equals("AVLTree")){
+      }else if(this.getClass().getName().equals("SebastianCueva.AVLTree")){
          ((AVLTree)this).tempComparisons = comparisons;
       }
       size++;
@@ -90,9 +92,9 @@ public class BST<E extends Comparable<E>> implements Tree<E> {
     * Save the comparisons amount into BSTComparisons.txt file.
     */
    public void computeComparisonsAverage(){
-      if(this.getClass().getName().equals("BST")){
+      if(this.getClass().getName().equals("SebastianCueva.BST")){
          fileManager.openFileReader("comparisonsBST");
-      }else if(this.getClass().getName().equals("AVLTree")){
+      }else if(this.getClass().getName().equals("SebastianCueva.AVLTree")){
          fileManager.openFileReader("comparisonsAVLT");
       }
       int comparisons = 0;
@@ -200,7 +202,7 @@ public class BST<E extends Comparable<E>> implements Tree<E> {
       TreeNode<E> current = root; // Start from the root
       while(current != null){
          list.add(current); // Add the node to the list
-         if(this.getClass().getName().equals("AVLTree")){
+         if(this.getClass().getName().equals("SebastianCueva.AVLTree")){
             ((AVLTree)this).tempComparisons++;
          }
          if(e.compareTo(current.element) < 0){
@@ -335,17 +337,14 @@ public class BST<E extends Comparable<E>> implements Tree<E> {
     root = null;
     size = 0;
   }
-
-
-
-
-
-
-
-
-
-
-
+  
+   public String getComparisonsData(){
+      String output = "";
+      output += "Datos del arbol de la clase BST.java (Arbol Binario de Busqueda).\n";
+      output += "Promedio de comparaciones: " + String.format("%.4f", getComparisonsAverage()) + "\n";
+      output += "Altura del arbol: " + getHeight() + "\n";
+      return(output);
+   }
 
   public int getNumberOfLeaves()
   {

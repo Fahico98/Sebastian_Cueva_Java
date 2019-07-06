@@ -1,3 +1,4 @@
+
 package SebastianCueva;
 
 import java.util.*;
@@ -36,27 +37,27 @@ public interface MyMap<K, V> {
   /** Return a set consisting of the values in this map */
   public java.util.Set<V> values();
   
-  /** Define inner class for Entry */
-  public static class Entry<K, V> {
-    K key;
-    V value;
-    
-    public Entry(K key, V value) {
-      this.key = key;
-      this.value = value;
-    }
-    
-    public K getKey() {
-      return key;
-    }
-    
-    public V getValue() {
-      return value;
-    }
-    
-    @Override
-    public String toString() {
-      return "[" + key + ", " + value + "]";
-    }
-  }
+   /** Define inner class for Entry */
+   public static class Entry<K, V> {
+      K key;
+      V value;
+
+      public Entry(K key, V value) {
+         this.key = key;
+         this.value = value;
+      }
+
+      public K getKey() {
+         return key;
+      }
+
+      public V getValue() {
+         return value;
+      }
+
+      @Override
+      public String toString() {
+         return "[" + key + ", " + value + "]";
+      }
+   }
 }    

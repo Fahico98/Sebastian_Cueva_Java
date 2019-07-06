@@ -1,5 +1,5 @@
-package SebastianCueva;
 
+package SebastianCueva;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -8,25 +8,34 @@ public class Main {
    
    public static void main(String[] args) throws FileNotFoundException, InterruptedException {
       RandomTestDataGenerator dataGenerator = new RandomTestDataGenerator();
+      
       saveData(dataGenerator.generateStringList(10000, 8));
       
-      MyHashMap_LinearProbing<String, String> linearProbingMap = (MyHashMap_LinearProbing)loadHashMap("linearProbing");
-      MyHashMap_QuadraticProbing<String, String> linearQuadraticMap = (MyHashMap_QuadraticProbing)loadHashMap("quadraticProbing");
-      MyHashMap_DoubleHashing<String, String> doubleHashingMap = (MyHashMap_DoubleHashing)loadHashMap("doubleHashing");
-      
-      /*
       BST<String> bst = (BST<String>)loadTree("BST");
       AVLTree<String> avlt = (AVLTree<String>)loadTree("AVLT");
-      System.out.println("bst comparisonsAverage: " + String.format("%.4f", bst.getComparisonsAverage()));
-      System.out.println("bst height: " + bst.getHeight());
-      System.out.println("");
-      System.out.println("avlt comparisonsAverage: " + String.format("%.4f", avlt.getComparisonsAverage()));
-      System.out.println("avlt height: " + avlt.getHeight());
-      System.out.println("avlt spinningLL: " + avlt.getSpinningLL());
-      System.out.println("avlt spinningLR: " + avlt.getSpinningLR());
-      System.out.println("avlt spinningRR: " + avlt.getSpinningRR());
-      System.out.println("avlt spinningRL: " + avlt.getSpinningRL());
-      */
+      MyHashMap_LinearProbing<String, String> linearProbingMap = (MyHashMap_LinearProbing)loadHashMap("linearProbing");
+      MyHashMap_QuadraticProbing<String, String> quadraticProbingMap = (MyHashMap_QuadraticProbing)loadHashMap("quadraticProbing");
+      MyHashMap_DoubleHashing<String, String> doubleHashingMap = (MyHashMap_DoubleHashing)loadHashMap("doubleHashing");
+      
+      System.out.println("A continuación se muestran los datos obtenidos al incertar 10000 cadenas\n"
+            + "de texto de 8 caracteres cada una dentro de diferentes estructuras de datos...\n\n");
+      
+      System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+      
+      System.out.println(bst.getComparisonsData());
+      System.out.println(avlt.getComparisonsData() + "\n");
+      
+      System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+      
+      System.out.println(linearProbingMap.getCollisionsData());
+      
+      System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+      
+      System.out.println(quadraticProbingMap.getCollisionsData());
+      
+      System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+      
+      System.out.println(doubleHashingMap.getCollisionsData());
    }
    
    public static void saveData(ArrayList<String> list){
@@ -86,6 +95,7 @@ public class Main {
             break;
          }
       }
+      fileManager.closeFileReader();
       return(output);
    }
 }

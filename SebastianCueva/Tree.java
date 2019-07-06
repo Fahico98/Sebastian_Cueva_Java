@@ -1,3 +1,4 @@
+
 package SebastianCueva;
 
 import java.util.*;
@@ -99,8 +100,6 @@ public interface Tree<E> extends Collection<E>
     return c1;
   }
 
-
-  
   @Override
   public default boolean removeAll(Collection<?> c) 
   {
@@ -119,7 +118,6 @@ public interface Tree<E> extends Collection<E>
 
     return c2;
   }
-
 
   @Override
   public default boolean retainAll(Collection <?> c)
@@ -140,7 +138,6 @@ public interface Tree<E> extends Collection<E>
       return v;
   }
 
-
   @Override
   public default Object[] toArray()
   {
@@ -157,5 +154,4 @@ public interface Tree<E> extends Collection<E>
 
     return array;
   }
-
 }

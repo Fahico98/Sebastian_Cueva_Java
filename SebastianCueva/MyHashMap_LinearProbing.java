@@ -1,5 +1,5 @@
-package SebastianCueva;
 
+package SebastianCueva;
 
 import java.util.*;
 
@@ -194,5 +194,23 @@ public class MyHashMap_LinearProbing<K, V> implements MyMap<K, V>{
    @Override
    public boolean isEmpty() {
       return(size == 0);
+   }
+   
+   public String getCollisionsData(){
+      fileManager.openFileReader("linearProbing");
+      String line, output = "";
+      while(true){
+         line = fileManager.loadLine();
+         if(line != null){
+            output += "Datos antes de la ampliación número " + line + " de la clase MyHashMap_LinearProbing.java.\n";
+            output += "- entradas sin colición: " + fileManager.loadLine() + "\n";
+            output += "- entradas que colicionaron: " + fileManager.loadLine() + "\n";
+            output += "- coliciones totales debido al método Lineal Probing: " + fileManager.loadLine() + "\n\n";
+         }else{
+            fileManager.closeFileReader();
+            break;
+         }
+      }
+      return(output);
    }
 }
