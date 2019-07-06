@@ -1,3 +1,5 @@
+package SebastianCueva;
+
 import java.util.*;
 
 public interface MyMap<K, V> {
@@ -23,7 +25,7 @@ public interface MyMap<K, V> {
   public java.util.Set<K> keySet();
   
   /** Add an entry (key, value) into the map */
-  public V put(K key, V value);
+  public void put(K key, V value);
 
   /** Remove the entries for the specified key */
   public void remove(K key);

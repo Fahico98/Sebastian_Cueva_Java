@@ -1,3 +1,5 @@
+package SebastianCueva;
+
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -6,7 +8,7 @@ public class RandomTestDataGenerator {
    
    private static final String ALPHA_NUMERIC_STRING = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
    private static final int ALPHA_NUMERIC_STRING_LENGTH = ALPHA_NUMERIC_STRING.length();
-   Random rand = new Random();
+   private Random rand = new Random();
    
    public ArrayList<String> generateStringList(int listLength, int stringLength){
       ArrayList<String> output = new ArrayList();

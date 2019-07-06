@@ -1,3 +1,5 @@
+package SebastianCueva;
+
 import java.util.*;
 
 public class BST<E extends Comparable<E>> implements Tree<E> {
@@ -43,6 +45,7 @@ public class BST<E extends Comparable<E>> implements Tree<E> {
       int comparisons = 0;
       if(root == null){
          root = createNewNode(e); // Create a new root
+         root.level = 0;
       }else{
          // Locate the parent node
          TreeNode<E> parent = null;
@@ -63,12 +66,22 @@ public class BST<E extends Comparable<E>> implements Tree<E> {
          // Create the new node and attach it to the parent node
          if(e.compareTo(parent.element) < 0){
             parent.left = createNewNode(e);
+            parent.left.level = parent.level + 1;
          }else{
             parent.right = createNewNode(e);
+            parent.right.level = parent.level + 1;
+         }
+         int tempLevel = parent.level + 1;
+         if(tempLevel > height){
+            height = tempLevel;
          }
          comparisons++;
       }
-      fileManager.saveLine(Integer.toString(comparisons));
+      if(this.getClass().getName().equals("BST")){
+         fileManager.saveLine(Integer.toString(comparisons));
+      }else if(this.getClass().getName().equals("AVLTree")){
+         ((AVLTree)this).tempComparisons = comparisons;
+      }
       size++;
       return(true); // Element inserted successfully
    }
@@ -76,23 +89,22 @@ public class BST<E extends Comparable<E>> implements Tree<E> {
    /**
     * Save the comparisons amount into BSTComparisons.txt file.
     */
-   public void computeComparisonsAverageAndHeght(){
-      fileManager.openFileReader("comparisonsBST");
-      int comparison = 0, comparisons = 0, comparisonMax = 0;
+   public void computeComparisonsAverage(){
+      if(this.getClass().getName().equals("BST")){
+         fileManager.openFileReader("comparisonsBST");
+      }else if(this.getClass().getName().equals("AVLTree")){
+         fileManager.openFileReader("comparisonsAVLT");
+      }
+      int comparisons = 0;
       while(true){
          String line = fileManager.loadLine();
          if(line != null){
-            comparison = Integer.parseInt(line);
-            comparisons += comparison;
-            if(comparison > comparisonMax){
-               comparisonMax = comparison;
-            }
+            comparisons += Integer.parseInt(line);
          }else{
             fileManager.closeFileReader();
             break;
          }
       }
-      height = comparisonMax - 1;
       comparisonsAverage = (float) comparisons / size;
    }
    
@@ -161,9 +173,11 @@ public class BST<E extends Comparable<E>> implements Tree<E> {
       public E element;
       public TreeNode<E> left;
       public TreeNode<E> right;
+      public int level;
 
       public TreeNode(E e) {
          element = e;
+         level = 0;
       }
    }
 
@@ -177,29 +191,28 @@ public class BST<E extends Comparable<E>> implements Tree<E> {
     return root;
   }
 
-
- 
-
-  /** Returns a path from the root leading to the specified element */
-  public java.util.ArrayList<TreeNode<E>> path(E e) {
-    java.util.ArrayList<TreeNode<E>> list =
-      new java.util.ArrayList<>();
-    TreeNode<E> current = root; // Start from the root
-
-    while (current != null) {
-      list.add(current); // Add the node to the list
-      if (e.compareTo(current.element) < 0) {
-        current = current.left;
+   /** Returns a path from the root leading to the specified element
+    * @param e
+    * @return
+    */
+   public ArrayList<TreeNode<E>> path(E e) {
+      ArrayList<TreeNode<E>> list = new ArrayList<>();
+      TreeNode<E> current = root; // Start from the root
+      while(current != null){
+         list.add(current); // Add the node to the list
+         if(this.getClass().getName().equals("AVLTree")){
+            ((AVLTree)this).tempComparisons++;
+         }
+         if(e.compareTo(current.element) < 0){
+            current = current.left;
+         }else if(e.compareTo(current.element) > 0){
+            current = current.right;
+         }else{
+            break;
+         }
       }
-      else if (e.compareTo(current.element) > 0) {
-        current = current.right;
-      }
-      else
-        break;
-    }
-
-    return list; // Return an array list of nodes
-  }
+      return(list); // Return an array list of nodes
+   }
 
   @Override /** Delete an element from the binary tree.
    * Return true if the element is deleted successfully

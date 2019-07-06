@@ -1,3 +1,5 @@
+package SebastianCueva;
+
 import java.util.LinkedList;
 
 public class MyHashMap<K, V> implements MyMap<K, V> {
@@ -123,7 +125,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
   }
       
   @Override /** Add an entry (key, value) into the map */
-  public V put(K key, V value) {
+  public void put(K key, V value) {
     if (get(key) != null) { // The key is already in the map
       int bucketIndex = hash(key.hashCode());
       LinkedList<Entry<K, V>> bucket = table[bucketIndex]; 
@@ -133,7 +135,6 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
           // Replace old value with new value
           entry.value = value; 
           // Return the old value for the key
-          return oldValue;
         }
     }
   
@@ -156,8 +157,6 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     table[bucketIndex].add(new MyMap.Entry<K, V>(key, value));
 
     size++; // Increase size
-    
-    return value;  
   } 
  
   @Override /** Remove the entries for the specified key */

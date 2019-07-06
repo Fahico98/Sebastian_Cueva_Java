@@ -1,3 +1,5 @@
+package SebastianCueva;
+
 
 import java.io.*;
 import java.util.regex.Matcher;
@@ -11,13 +13,14 @@ public class fileManager {
    public static BufferedWriter writer = null;
    public static BufferedReader reader = null;
    
-   public static void openFileWriter(String fileName){
+   public static void openFileWriter(String fileName, boolean append){
       try{
          File file = new File(TEXTS_DIRECTORY + "/" + fileName + ".txt");
-         writer = new BufferedWriter(new FileWriter(file));
+         writer = new BufferedWriter(new FileWriter(file, append));
       }catch(IOException e){
          System.out.println(e.getMessage());
       }
+      //System.out.println("File writer opened ---> " + fileName);
    }
    
    public static void openFileReader(String fileName){
@@ -27,6 +30,7 @@ public class fileManager {
       }catch(IOException e){
          System.out.println(e.getMessage());
       }
+      //System.out.println("File reader opened ---> " + fileName);
    }
    
    public static void closeFileWriter(){
@@ -35,6 +39,7 @@ public class fileManager {
       }catch(IOException e){
          System.out.println(e.getMessage());
       }
+      //System.out.println("File writer closed...");
    }
    
    public static void closeFileReader(){
@@ -43,6 +48,7 @@ public class fileManager {
       }catch(IOException e){
          System.out.println(e.getMessage());
       }
+      //System.out.println("File reader closed...");
    }
    
    public static boolean saveLine(String data){
@@ -75,5 +81,16 @@ public class fileManager {
          System.out.println(e.getMessage());
       }
       return(null);
+   }
+   
+    public static void cleanFile(String fileName){
+      try{
+         File file = new File(TEXTS_DIRECTORY + "/" + fileName + ".txt");
+         writer = new BufferedWriter(new FileWriter(file, false));
+         writer.write("");
+         writer.close();
+      }catch(IOException e){
+         System.out.println(e.getMessage());
+      }
    }
 }
