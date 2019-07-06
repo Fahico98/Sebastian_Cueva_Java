@@ -12,6 +12,7 @@ public class Main {
       
       MyHashMap_LinearProbing<String, String> linearProbingMap = (MyHashMap_LinearProbing)loadHashMap("linearProbing");
       MyHashMap_QuadraticProbing<String, String> linearQuadraticMap = (MyHashMap_QuadraticProbing)loadHashMap("quadraticProbing");
+      MyHashMap_DoubleHashing<String, String> doubleHashingMap = (MyHashMap_DoubleHashing)loadHashMap("doubleHashing");
       
       /*
       BST<String> bst = (BST<String>)loadTree("BST");
@@ -70,6 +71,10 @@ public class Main {
          case "quadraticProbing":
             output = new MyHashMap_QuadraticProbing();
             fileManager.cleanFile("quadraticProbing");
+            break;
+         case "doubleHashing":
+            output = new MyHashMap_DoubleHashing();
+            fileManager.cleanFile("doubleHashing");
             break;
       }
       fileManager.openFileReader("data");

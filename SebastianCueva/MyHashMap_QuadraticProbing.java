@@ -7,7 +7,7 @@ public class MyHashMap_QuadraticProbing<K, V> implements MyMap<K, V>{
    
    private final static int DEFAULT_INITIAL_CAPACITY = 5000, MAXIMUM_CAPACITY = 1 << 30, B = 3;
    private final static float DEFAULT_MAX_LOAD_FACTOR = 0.7f, INCREMENT = 0.5f;
-   private int capacity, size, collisions, quadraticCollisions, noCollision, increaseCases;
+   private int capacity, size, collisions, quadraticProbingCollisions, noCollision, increaseCases;
    private float loadFactorThreshold;
    private Entry<K, V>[] table;
    
@@ -91,7 +91,7 @@ public class MyHashMap_QuadraticProbing<K, V> implements MyMap<K, V>{
          while(true){
             if(table[index] != null){
                collision = true;
-               quadraticCollisions++;
+               quadraticProbingCollisions++;
                index = (hashIndex + (int)Math.pow(j, 2)) % capacity;
                j++;
             }else{
@@ -170,9 +170,10 @@ public class MyHashMap_QuadraticProbing<K, V> implements MyMap<K, V>{
       fileManager.saveLine(Integer.toString(increaseCases));
       fileManager.saveLine(Integer.toString(noCollision));
       fileManager.saveLine(Integer.toString(collisions));
-      fileManager.saveLine(Integer.toString(quadraticCollisions));
+      fileManager.saveLine(Integer.toString(quadraticProbingCollisions));
       noCollision = 0;
       collisions = 0;
+      quadraticProbingCollisions = 0;
       fileManager.closeFileWriter();
    }
    

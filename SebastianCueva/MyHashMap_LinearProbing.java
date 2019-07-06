@@ -7,7 +7,7 @@ public class MyHashMap_LinearProbing<K, V> implements MyMap<K, V>{
    
    private final static int DEFAULT_INITIAL_CAPACITY = 5000, MAXIMUM_CAPACITY = 1 << 30, B = 3;
    private final static float DEFAULT_MAX_LOAD_FACTOR = 0.7f, INCREMENT = 0.5f;
-   private int capacity, size, collisions, linearCollisions, noCollision, increaseCases;
+   private int capacity, size, collisions, linearProbingCollisions, noCollision, increaseCases;
    private float loadFactorThreshold;
    private Entry<K, V>[] table;
    
@@ -88,7 +88,7 @@ public class MyHashMap_LinearProbing<K, V> implements MyMap<K, V>{
          while(true){
             if(table[hashIndex] != null){
                collision = true;
-               linearCollisions++;
+               linearProbingCollisions++;
                hashIndex = (hashIndex == (capacity - 1)) ? 0 : hashIndex + 1;
             }else{
                table[hashIndex] = new Entry(key, value);
@@ -165,9 +165,10 @@ public class MyHashMap_LinearProbing<K, V> implements MyMap<K, V>{
       fileManager.saveLine(Integer.toString(increaseCases));
       fileManager.saveLine(Integer.toString(noCollision));
       fileManager.saveLine(Integer.toString(collisions));
-      fileManager.saveLine(Integer.toString(linearCollisions));
+      fileManager.saveLine(Integer.toString(linearProbingCollisions));
       noCollision = 0;
       collisions = 0;
+      linearProbingCollisions = 0;
       fileManager.closeFileWriter();
    }
 

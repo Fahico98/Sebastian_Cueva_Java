@@ -6,7 +6,7 @@ public class MyHashMap_DoubleHashing<K, V> implements MyMap<K, V>{
    
    private final static int DEFAULT_INITIAL_CAPACITY = 5000, MAXIMUM_CAPACITY = 1 << 30, B = 3;
    private final static float DEFAULT_MAX_LOAD_FACTOR = 0.7f, INCREMENT = 0.5f;
-   private int capacity, size, collisions, linearCollisions, noCollision, increaseCases;
+   private int capacity, size, collisions, doubleHashingCollisions, noCollision, increaseCases;
    private float loadFactorThreshold;
    private Entry<K, V>[] table;
    
@@ -53,14 +53,16 @@ public class MyHashMap_DoubleHashing<K, V> implements MyMap<K, V>{
    
    @Override
    public V get(K key){
-      int hashIndex = hash(key);
+      int j = 0;
+      int hashIndex = hash(key, j);
       while(true){
          if(table[hashIndex] != null){
             Entry<K, V> entry = table[hashIndex];
             if(entry.getKey().equals(key)){
                return(entry.getValue());
             }else{
-               hashIndex = (hashIndex == (capacity - 1)) ? 0 : hashIndex + 1;
+               j++;
+               hashIndex = hash(key, j);
             }
          }else{
             return(null);
@@ -83,13 +85,15 @@ public class MyHashMap_DoubleHashing<K, V> implements MyMap<K, V>{
    @Override
    public void put(K key, V value){
       boolean collision = false;
+      int j = 0;
       if(get(key) == null){
-         int hashIndex = hash(key);
+         int hashIndex = hash(key, j);
          while(true){
             if(table[hashIndex] != null){
                collision = true;
-               linearCollisions++;
-               hashIndex = (hashIndex == (capacity - 1)) ? 0 : hashIndex + 1;
+               doubleHashingCollisions++;
+               j++;
+               hashIndex = hash(key, j);
             }else{
                table[hashIndex] = new Entry(key, value);
                if(collision){
@@ -113,7 +117,7 @@ public class MyHashMap_DoubleHashing<K, V> implements MyMap<K, V>{
    @Override
    public void remove(K key) {
       if(get(key) != null){
-         int hashIndex = hash(key);
+         int hashIndex = hash(key, 0);
          Entry<K, V> entry = table[hashIndex];
          table[hashIndex] = null;
          size--;
@@ -137,7 +141,7 @@ public class MyHashMap_DoubleHashing<K, V> implements MyMap<K, V>{
       return(set);
    }
    
-   private int hash(K key){
+   private int hash(K key, int j){
       int k = 0;
       String strValue = (String)key;
       int n = strValue.length();
@@ -145,7 +149,11 @@ public class MyHashMap_DoubleHashing<K, V> implements MyMap<K, V>{
       for(int i = 0; i < n; i++){
          k += ((int)asciiArray[i]) * (int)Math.pow(B, (n - (i + 1)));
       }
-      return(k % capacity);
+      return (k + (j * primeHash(k))) % capacity;
+   }
+   
+   private int primeHash(int k){
+      return(11 - (k % 11));
    }
    
    private void rehash() {
@@ -161,13 +169,14 @@ public class MyHashMap_DoubleHashing<K, V> implements MyMap<K, V>{
    }
    
    private void saveCollisionsData(){
-      fileManager.openFileWriter("linearProbing", true);
+      fileManager.openFileWriter("doubleHashing", true);
       fileManager.saveLine(Integer.toString(increaseCases));
       fileManager.saveLine(Integer.toString(noCollision));
       fileManager.saveLine(Integer.toString(collisions));
-      fileManager.saveLine(Integer.toString(linearCollisions));
+      fileManager.saveLine(Integer.toString(doubleHashingCollisions));
       noCollision = 0;
       collisions = 0;
+      doubleHashingCollisions = 0;
       fileManager.closeFileWriter();
    }
 
